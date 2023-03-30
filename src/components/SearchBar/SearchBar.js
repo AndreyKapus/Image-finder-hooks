@@ -1,6 +1,12 @@
+import FetchPictures from "PicturesApi"
 import css from "../../styles.module.css"
 
+
 const SearchBar = () => {
+
+const data = FetchPictures().then(res => JSON.stringify(res))
+console.log(data)
+
   return(
     <>
       <header className={css.Searchbar}>
