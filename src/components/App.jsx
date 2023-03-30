@@ -1,9 +1,20 @@
+import React from "react";
 import SearchBar from "./SearchBar";
 
-export const App = () => {
-  return (
-    <div>
-      <SearchBar/>
-    </div>
-  );
+export class App extends React.Component {
+  state = {
+    pictures: []
+  };
+
+  handleFormSubmit = pictureName => {
+    console.log(pictureName)
+  }
+
+  render() {
+    return (
+      <div>
+        <SearchBar onSubmit={this.handleFormSubmit}/>
+      </div>
+    );
+  }
 };
