@@ -14,7 +14,10 @@ class SearchBar extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
+    if(this.state.pictureName.trim() === '') {
+      alert("введите имя картинки")
+      return
+    }
     this.props.onSubmit(this.state.pictureName)
 
     this.setState({ pictureName: '' })
