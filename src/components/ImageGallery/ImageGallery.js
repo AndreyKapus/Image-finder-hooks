@@ -1,5 +1,6 @@
 import FetchPictures from "PicturesApi";
 import React from "react"
+import ImageGalleryItem from "components/imageGalleryItem/ImageGalleryItem";
 
 const API_KEY = '29432159-064ba5645d6ae7f18ff2bb6d2';
 const BASE_URL = 'https://pixabay.com/api/'
@@ -25,7 +26,8 @@ class ImageGallery extends React.Component {
 
     return (
       <div>
-          {this.state.picture && this.state.picture.hits.map(pic => <div key={pic.id}>{pic.id}</div>)}
+          <ImageGalleryItem pic={this.state.picture}/>
+          {/* {this.state.picture && this.state.picture.hits.map(pic => <div key={pic.id}>{pic.id}</div>)} */}
       </div>
     )
   }
