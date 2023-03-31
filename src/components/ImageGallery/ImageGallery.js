@@ -1,6 +1,8 @@
 
 import React from "react"
 import ImageGalleryItem from "components/imageGalleryItem/ImageGalleryItem";
+import { Blocks } from "react-loader-spinner";
+import { LoaderWrapper } from "components/Loader/Loader";
 
 const API_KEY = '29432159-064ba5645d6ae7f18ff2bb6d2';
 const BASE_URL = 'https://pixabay.com/api/'
@@ -18,9 +20,10 @@ class ImageGallery extends React.Component {
     if (prevName !== nextName) {
       this.setState({loading: true})
       const pictureName = this.props.picture;
-      fetch(`${BASE_URL}?q=${pictureName}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
-      .then(response => response.json()).then(data => this.setState({picture: data})).catch(error => console.log(error))
-      this.setState({loading: false})
+
+        fetch(`${BASE_URL}?q=${pictureName}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
+        .then(response => response.json()).then(data => this.setState({picture: data})).catch(error => console.log(error))
+        this.setState({loading: false})
     }
 
    }
@@ -28,7 +31,7 @@ class ImageGallery extends React.Component {
 
     return (
       <div>
-          {this.state.loading ? <div>Loading...</div> : <ImageGalleryItem pic={this.state.picture}/>}
+          {this.state.loading ? <LoaderWrapper><Blocks/></LoaderWrapper> : <ImageGalleryItem pic={this.state.picture}/>}
       </div>
     )
   }
