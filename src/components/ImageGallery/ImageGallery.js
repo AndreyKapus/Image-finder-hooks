@@ -3,6 +3,7 @@ import React from "react"
 import ImageGalleryItem from "components/imageGalleryItem/ImageGalleryItem";
 import { Blocks } from "react-loader-spinner";
 import { LoaderWrapper } from "components/Loader/Loader";
+import Button from "components/Button/Button";
 
 const API_KEY = '29432159-064ba5645d6ae7f18ff2bb6d2';
 const BASE_URL = 'https://pixabay.com/api/'
@@ -12,6 +13,7 @@ class ImageGallery extends React.Component {
     picture: null,
     loading: false,
     error: null,
+    page: 1,
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -22,7 +24,7 @@ class ImageGallery extends React.Component {
       this.setState({loading: true})
       const pictureName = this.props.picture;
 
-        fetch(`${BASE_URL}?q=${pictureName}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
+        fetch(`${BASE_URL}?q=${pictureName}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
         .then(response => {
           if(response.ok) {
             return response.json()
@@ -33,17 +35,24 @@ class ImageGallery extends React.Component {
          }).then(data => this.setState({picture: data}))
           .catch(error => this.setState({error}))
          .finally(() => this.setState({loading: false}))
-
     }
-
    }
-  render() {
 
+   handleLoadMore = (e) => {
+    this.setState(prevState => ({
+      page: prevState.page + 1
+    }))
+   }
+
+  render() {
+    const {error, picture, loading} = this.state
     return (
+
       <div>
-          {this.state.error && <h2>{this.state.error.massege}</h2>}
-          {this.state.picture && this.state.picture.hits.length === 0 && <h2>pictures not found</h2>}
-          {this.state.loading ? <LoaderWrapper><Blocks/></LoaderWrapper> : <ImageGalleryItem pic={this.state.picture}/>}
+          {error && <h2>{error.massege}</h2>}
+          {picture && picture.hits.length === 0 && <h2>pictures not found</h2>}
+          {loading ? <LoaderWrapper><Blocks/></LoaderWrapper> : <ImageGalleryItem pic={picture}/>}
+          {picture && picture.hits.length > 0 && <Button loadMore={this.handleLoadMore}/>}
       </div>
     )
   }

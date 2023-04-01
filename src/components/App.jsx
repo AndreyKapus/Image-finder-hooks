@@ -10,7 +10,9 @@ export class App extends React.Component {
 
   handleFormSubmit = pictureName => {
     this.setState({picturesName: pictureName})
-  }
+  };
+
+
 
   render() {
     const pic = this.state.picturesName
