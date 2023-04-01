@@ -11,6 +11,7 @@ class ImageGallery extends React.Component {
   state = {
     picture: null,
     loading: false,
+    error: null,
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -22,8 +23,17 @@ class ImageGallery extends React.Component {
       const pictureName = this.props.picture;
 
         fetch(`${BASE_URL}?q=${pictureName}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
-        .then(response => response.json()).then(data => this.setState({picture: data})).catch(error => console.log(error))
-        this.setState({loading: false})
+        .then(response => {
+          if(response.ok) {
+            return response.json()
+          }
+          return Promise.reject(
+            new Error("нет таких картинок")
+          )
+         }).then(data => this.setState({picture: data}))
+          .catch(error => this.setState({error}))
+         .finally(() => this.setState({loading: false}))
+
     }
 
    }
@@ -31,6 +41,8 @@ class ImageGallery extends React.Component {
 
     return (
       <div>
+          {this.state.error && <h2>{this.state.error.massege}</h2>}
+          {this.state.picture && this.state.picture.hits.length === 0 && <h2>pictures not found</h2>}
           {this.state.loading ? <LoaderWrapper><Blocks/></LoaderWrapper> : <ImageGalleryItem pic={this.state.picture}/>}
       </div>
     )
