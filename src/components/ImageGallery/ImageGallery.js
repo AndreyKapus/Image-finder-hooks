@@ -37,14 +37,14 @@ class ImageGallery extends React.Component {
     })
     )
     FetchApi(pictureName, page).then(data => this.setState(prevState => ({
-      picture: {...prevState.picture, ...data}
+      picture: {...prevState, ...data}
     })))
           .catch(error => this.setState({error}))
          .finally(() => this.setState({loading: false}))
    }
 
   render() {
-    const {error, picture, loading} = this.state;
+    const {error, picture, loading} = this.state
     return (
 
       <div>
