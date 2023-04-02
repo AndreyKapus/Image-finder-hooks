@@ -4,9 +4,7 @@ import ImageGalleryItem from "components/imageGalleryItem/ImageGalleryItem";
 import { Blocks } from "react-loader-spinner";
 import { LoaderWrapper } from "components/Loader/Loader";
 import Button from "components/Button/Button";
-
-const API_KEY = '29432159-064ba5645d6ae7f18ff2bb6d2';
-const BASE_URL = 'https://pixabay.com/api/'
+import FetchApi from "components/FetachApi/FetchApi";
 
 class ImageGallery extends React.Component {
   state = {
@@ -23,36 +21,38 @@ class ImageGallery extends React.Component {
     if (prevName !== nextName) {
       this.setState({loading: true})
       const pictureName = this.props.picture;
+      const page = this.state.page
 
-        fetch(`${BASE_URL}?q=${pictureName}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`)
-        .then(response => {
-          if(response.ok) {
-            return response.json()
-          }
-          return Promise.reject(
-            new Error("нет таких картинок")
-          )
-         }).then(data => this.setState({picture: data}))
+      FetchApi(pictureName, page).then(data => this.setState({picture: data}))
           .catch(error => this.setState({error}))
          .finally(() => this.setState({loading: false}))
     }
    }
 
    handleLoadMore = (e) => {
+    const pictureName = this.state.page;
+    const page = this.state.page
     this.setState(prevState => ({
       page: prevState.page + 1
-    }))
+    })
+    )
+    FetchApi(pictureName, page).then(data => this.setState(prevState => ({
+      picture: {...prevState.picture, ...data}
+    })))
+          .catch(error => this.setState({error}))
+         .finally(() => this.setState({loading: false}))
    }
 
   render() {
-    const {error, picture, loading} = this.state
+    const {error, picture, loading} = this.state;
     return (
 
       <div>
           {error && <h2>{error.massege}</h2>}
           {picture && picture.hits.length === 0 && <h2>pictures not found</h2>}
           {loading ? <LoaderWrapper><Blocks/></LoaderWrapper> : <ImageGalleryItem pic={picture}/>}
-          {picture && picture.hits.length > 0 && <Button loadMore={this.handleLoadMore}/>}
+          {picture && picture.hits.length > 0 && <Button loadMore={this.handleLoadMore}
+          />}
       </div>
     )
   }
