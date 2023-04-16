@@ -20,7 +20,7 @@ export const App = () => {
     return (
       <div>
         <SearchBar onSubmit={handleFormSubmit}/>
-        <ImageGallery picture={pictureName}/>
+        <ImageGallery pictureName={pictureName}/>
 
       </div>
     );

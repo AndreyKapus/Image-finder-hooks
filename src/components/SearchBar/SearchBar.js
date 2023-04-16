@@ -1,4 +1,4 @@
-// import FetchPictures from "PicturesApi"
+
 import React, { useState } from "react"
 import css from "../../styles.module.css"
 
