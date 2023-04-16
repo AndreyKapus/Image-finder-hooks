@@ -1,34 +1,30 @@
 // import FetchPictures from "PicturesApi"
-import React from "react"
+import React, { useState } from "react"
 import css from "../../styles.module.css"
 
 
-class SearchBar extends React.Component {
-  state = {
-    pictureName: '',
+const SearchBar = ({onSubmit}) => {
+  const [pictureName, setPictureName] = useState('')
+
+  const handleInputChange = e => {
+    setPictureName(e.currentTarget.value.toLowerCase())
   };
 
-  handleInputChange = e => {
-    this.setState({pictureName: e.currentTarget.value.toLowerCase()})
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(this.state.pictureName.trim() === '') {
-      alert("введите имя картинки")
-      return
-    }
-    this.props.onSubmit(this.state.pictureName)
-
-    this.setState({ pictureName: '' })
+      if(pictureName.trim() === '') {
+       alert("введите имя картинки")
+       return
+    };
+      onSubmit(pictureName)
+      setPictureName(pictureName)
   }
 
-  render() {
     return(
       <>
         <header className={css.Searchbar}>
           <form className={css.SearchForm}
-            onSubmit={this.handleSubmit}
+            onSubmit={handleSubmit}
           >
             <button type="submit" className={css.Button}>
               <span className={css.buttonLabel}>Search</span>
@@ -40,8 +36,8 @@ class SearchBar extends React.Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            value={this.state.pictureName}
-            onChange={this.handleInputChange}
+            value={pictureName}
+            onChange={handleInputChange}
       />
         </form>
       </header>
@@ -50,6 +46,6 @@ class SearchBar extends React.Component {
   }
 
 
-}
+
 
 export default SearchBar

@@ -1,33 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageGallery from "./ImageGallery";
 import SearchBar from "./SearchBar";
 
-export class App extends React.Component {
-  state = {
-    pictures: [],
-    picturesName: '',
-    showModal: false,
+export const App = () => {
+  // const [pictures, setPictures] = useState([]);
+  const [pictureName, setPicturesName] = useState('');
+  // const [showModal, setShowModal] = useState(false);
+
+  const handleFormSubmit = pictureName => {
+    setPicturesName(pictureName)
   };
 
-  handleFormSubmit = pictureName => {
-    this.setState({picturesName: pictureName})
-  };
-
-  togleModal = () => {
-    this.setState(({showModal}) => ({
-      showModal: !showModal,
-    }))
-  }
-
-  render() {
-    const pic = this.state.picturesName
+  // const togleModal = () => {
+  //   setShowModal(({showModal}) => ({
+  //     showModal: !showModal,
+  //   }))
+  // }
 
     return (
       <div>
-        <SearchBar onSubmit={this.handleFormSubmit}/>
-        <ImageGallery picture={pic}/>
+        <SearchBar onSubmit={handleFormSubmit}/>
+        <ImageGallery picture={pictureName}/>
 
       </div>
     );
   }
-};
+
