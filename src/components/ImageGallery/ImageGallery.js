@@ -25,7 +25,7 @@ const  ImageGallery = ({pictureName}) => {
 
   }, [pictureName, page])
 
-  const handleLoadMore = (e) => {
+  const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1)
   }
 
