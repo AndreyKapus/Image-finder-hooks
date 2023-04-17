@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import Modal from 'react-modal';
 
 Modal.setAppElement('body');
@@ -16,23 +16,10 @@ const customStyles = {
   },
 };
 
-
-const PicModal = () => {
-  const [modalOpen, setOpenModal] = useState(true);
-
-  function openModal() {
-    setOpenModal(true);
-  }
-
-
-
-  function closeModal() {
-    setOpenModal(false);
-  }
+const PicModal = ({closeModal, modalOpen}) => {
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
       <Modal
         isOpen={modalOpen}
         // onAfterOpen={afterOpenModal}
@@ -40,7 +27,7 @@ const PicModal = () => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-
+        {/* <img src={pic.hits.largeImageURL} alt='imag'/> */}
         <button onClick={closeModal}>close</button>
         <form>
           <input />

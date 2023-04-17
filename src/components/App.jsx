@@ -5,6 +5,16 @@ import PicModal from "Modal/Modal";
 
 export const App = () => {
   const [pictureName, setPicturesName] = useState('');
+  const [modalOpen, setOpenModal] = useState(false);
+
+  function openModal() {
+    setOpenModal(true);
+  }
+
+
+  function closeModal() {
+    setOpenModal(false);
+  }
 
   const handleFormSubmit = pictureName => {
     setPicturesName(pictureName)
@@ -13,8 +23,8 @@ export const App = () => {
     return (
       <div>
         <SearchBar onSubmit={handleFormSubmit}/>
-        <ImageGallery pictureName={pictureName}/>
-        <PicModal/>
+        <ImageGallery pictureName={pictureName} openModal={openModal}/>
+        <PicModal openModal={openModal} closeModal={closeModal} modalOpen={modalOpen}/>
       </div>
     );
   }

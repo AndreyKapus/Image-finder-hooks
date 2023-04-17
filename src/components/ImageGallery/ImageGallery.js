@@ -6,7 +6,7 @@ import { LoaderWrapper } from "components/Loader/Loader";
 import Button from "components/Button/Button";
 import FetchApi from "components/FetachApi/FetchApi";
 
-const  ImageGallery = ({pictureName}) => {
+const  ImageGallery = ({pictureName, openModal}) => {
 
   const [picture, setPicture] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ const  ImageGallery = ({pictureName}) => {
       <div>
           {error && <h2>{error.massege}</h2>}
           {picture && picture.hits.length === 0 && <h2>pictures not found</h2>}
-          {loading ? <LoaderWrapper><Blocks/></LoaderWrapper> : <ImageGalleryItem pic={picture}/>}
+          {loading ? <LoaderWrapper><Blocks/></LoaderWrapper> : <ImageGalleryItem pic={picture} openModal={openModal}/>}
           {picture && picture.hits.length > 0 && <Button loadMore={handleLoadMore}
           />}
       </div>
